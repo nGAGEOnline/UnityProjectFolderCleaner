@@ -1,6 +1,6 @@
 ﻿using UnityProjectFolderCleaner.Terminal.Enums;
 
-namespace UnityProjectFolderCleaner.Terminal.Helpers;
+namespace UnityProjectFolderCleaner.Terminal.Interfaces;
 
 public interface IOutputWriter
 {

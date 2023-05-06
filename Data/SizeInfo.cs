@@ -1,10 +1,10 @@
-﻿namespace UnityProjectFolderCleaner.Terminal;
+﻿namespace UnityProjectFolderCleaner.Terminal.Data;
 
 public class SizeInfo
 {
-	public long Size { get; }
+	public long Bytes { get; }
 
-	public SizeInfo(long size) => Size = size;
+	public SizeInfo(long bytes) => Bytes = bytes;
 
 	public override string ToString()
 	{
@@ -12,12 +12,12 @@ public class SizeInfo
 		const long oneMb = oneKb * 1024;
 		const long oneGb = oneMb * 1024;
 
-		return Size switch
+		return Bytes switch
 		{
-			>= oneGb => $"{(double)Size / oneGb:F2} GB",
-			>= oneMb => $"{(double)Size / oneMb:F2} MB",
-			>= oneKb => $"{(double)Size / oneKb:F2} KB",
-			_ => $"{Size} bytes"
+			>= oneGb => $"{(double)Bytes / oneGb:F2} GB",
+			>= oneMb => $"{(double)Bytes / oneMb:F2} MB",
+			>= oneKb => $"{(double)Bytes / oneKb:F2} KB",
+			_ => $"{Bytes} bytes"
 		};
 	}
 	

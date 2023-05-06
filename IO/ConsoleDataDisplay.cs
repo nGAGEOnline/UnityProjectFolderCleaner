@@ -1,8 +1,8 @@
-﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
+﻿using UnityProjectFolderCleaner.Terminal.Data;
+using UnityProjectFolderCleaner.Terminal.Enums;
 using UnityProjectFolderCleaner.Terminal.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal
+namespace UnityProjectFolderCleaner.Terminal.IO
 {
     public class ConsoleDataDisplay : IDataDisplay
     {
@@ -13,12 +13,12 @@ namespace UnityProjectFolderCleaner.Terminal
         public ConsoleDataDisplay(IOutputWriter outputWriter) 
 	        => _outputWriter = outputWriter;
 
-        public void DisplayUnityProjectTitle(UnityProject unityProject)
+        public void DisplayUnityProjectTitle(UnityProjectInfo unityProjectInfo)
         {
-	        _outputWriter.WriteInColor($"\t{unityProject.Name}", Color.White);
-            Console.CursorLeft = CURSOR_LEFT - (unityProject.UnityVersion.Length + 2);
+	        _outputWriter.WriteInColor($"\t{unityProjectInfo.Name}", Color.White);
+            Console.CursorLeft = CURSOR_LEFT - (unityProjectInfo.UnityVersion.Length + 2);
             _outputWriter.WriteInColor("[", Color.White);
-            _outputWriter.WriteInColor($"{unityProject.UnityVersion}", Color.Cyan);
+            _outputWriter.WriteInColor($"{unityProjectInfo.UnityVersion}", Color.Cyan);
             _outputWriter.WriteLineInColor("]", Color.White);
         }
 
@@ -36,7 +36,7 @@ namespace UnityProjectFolderCleaner.Terminal
             DisplayFileSizeLine("\tTotal size:", sizeInfo, Color.Yellow);
             DisplayFileSizeLine("\tRecommended to clean:", sizeInfoToClean, Color.Red);
 
-            var afterSize = new SizeInfo(sizeInfo.Size - sizeInfoToClean.Size);
+            var afterSize = new SizeInfo(sizeInfo.Bytes - sizeInfoToClean.Bytes);
             DisplayFileSizeLine("\tAfter cleaning:", afterSize, Color.Green);
 
             Console.WriteLine();

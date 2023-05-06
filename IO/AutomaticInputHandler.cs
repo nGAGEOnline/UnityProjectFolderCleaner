@@ -1,16 +1,22 @@
 ﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
 using UnityProjectFolderCleaner.Terminal.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal;
+namespace UnityProjectFolderCleaner.Terminal.IO;
 
-public class AutomaticInputHandler : IUserInputHandler
+public class AutomaticInputHandler : BaseInputHandler, IUserInputHandler
 {
-	private readonly IOutputWriter _outputWriter;
-	private readonly IEnumerable<string> _targetFolders = new[] { @"D:\UnityProjects", @"F:\UnityProjects" };
+	private readonly IEnumerable<string> _targetFolders = new[] { @"F:\UnityProjects" };
 
 	public AutomaticInputHandler(IOutputWriter outputWriter) 
-		=> _outputWriter = outputWriter;
+		: base(outputWriter) { }
+	
+	public AutomaticInputHandler(IOutputWriter outputWriter, IEnumerable<string> targetFolders) 
+		: base(outputWriter)
+	{
+		var array = targetFolders as string[] ?? targetFolders.ToArray();
+		if (array.Any())
+			_targetFolders = array;
+	}
 
 	public IEnumerable<string> GetTargetFolders()
 	{
@@ -26,13 +32,7 @@ public class AutomaticInputHandler : IUserInputHandler
 
 	public bool ConfirmCleaning()
 	{
-		_outputWriter.WriteInColor("\n(Mock)", Color.Gray);
-		_outputWriter.WriteInColor(" Do you want to proceed with cleaning?", Color.White);
-		_outputWriter.WriteInColor(" [Y]es", Color.Green);
-		_outputWriter.WriteInColor("/", Color.White);
-		_outputWriter.WriteInColor("[N]o", Color.Red);
-		_outputWriter.WriteInColor(" (Default: Yes)", Color.White);
-
+		DisplayCleaningConfirmationPrompt("(Mock) ");
 		ConsoleKeyInfo keyInfo;
 
 		do

@@ -1,15 +1,12 @@
 ﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
 using UnityProjectFolderCleaner.Terminal.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal
+namespace UnityProjectFolderCleaner.Terminal.IO
 {
-	public class ConsoleUserInputHandler : IUserInputHandler
+	public class ConsoleUserInputHandler : BaseInputHandler, IUserInputHandler
     {
-	    private readonly IOutputWriter _outputWriter;
-
 	    public ConsoleUserInputHandler(IOutputWriter outputWriter) 
-		    => _outputWriter = outputWriter;
+		    : base(outputWriter) { }
 
 	    public IEnumerable<string> GetTargetFolders()
         {
@@ -54,12 +51,7 @@ namespace UnityProjectFolderCleaner.Terminal
 
         public bool ConfirmCleaning()
         {
-            _outputWriter.WriteInColor("\nDo you want to proceed with cleaning?", Color.White);
-            _outputWriter.WriteInColor(" [Y]es", Color.Green);
-            _outputWriter.WriteInColor("/", Color.White);
-            _outputWriter.WriteInColor("[N]o", Color.Red);
-            _outputWriter.WriteInColor(" (Default: Yes)", Color.White);
-
+	        DisplayCleaningConfirmationPrompt();
             ConsoleKeyInfo keyInfo;
 
             do

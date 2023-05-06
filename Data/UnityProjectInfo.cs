@@ -1,6 +1,6 @@
-﻿namespace UnityProjectFolderCleaner.Terminal;
+﻿namespace UnityProjectFolderCleaner.Terminal.Data;
 
-public class UnityProject
+public class UnityProjectInfo
 {
 	public string Name => _directoryInfo.Name;
 	public string UnityVersion { get; private set; }
@@ -8,7 +8,7 @@ public class UnityProject
 	private readonly string[] _protectedFolders = { "Assets", "Packages", "ProjectSettings", "UserSettings" };
 	private readonly DirectoryInfo _directoryInfo;
 
-	public UnityProject(string path)
+	public UnityProjectInfo(string path)
 	{
 		_directoryInfo = new DirectoryInfo(path);
 		UnityVersion = GetUnityVersion();

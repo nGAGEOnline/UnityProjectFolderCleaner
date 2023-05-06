@@ -1,18 +1,22 @@
 ﻿// ConsoleMenu.cs
 
+using UnityProjectFolderCleaner.Terminal.Data;
 using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
 using UnityProjectFolderCleaner.Terminal.Interfaces;
 using UnityProjectFolderCleaner.Terminal.Services;
 
-namespace UnityProjectFolderCleaner.Terminal
+namespace UnityProjectFolderCleaner.Terminal.IO
 {
     public class ConsoleMenu
     {
         private readonly IOutputWriter _outputWriter;
+        private readonly IEnumerable<string> _targetFolders;
 
-        public ConsoleMenu(IOutputWriter outputWriter) 
-	        => _outputWriter = outputWriter;
+        public ConsoleMenu(IOutputWriter outputWriter, IEnumerable<string> targetFolders)
+        {
+	        _outputWriter = outputWriter;
+	        _targetFolders = targetFolders;
+        }
 
         public UnityProjectCleanerSettings? GetSettings()
         {
@@ -24,7 +28,7 @@ namespace UnityProjectFolderCleaner.Terminal
 	            return null;
 
             IUserInputHandler userInputHandler = inputModeSelection == 1
-                ? new AutomaticInputHandler(_outputWriter)
+                ? new AutomaticInputHandler(_outputWriter, _targetFolders)
                 : new ConsoleUserInputHandler(_outputWriter);
 
             var cleaningModeOptions = new List<string> { "Mock Cleaning", "Cleaning" };

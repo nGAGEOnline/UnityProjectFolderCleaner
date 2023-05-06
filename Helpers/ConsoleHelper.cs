@@ -1,4 +1,5 @@
 ﻿using UnityProjectFolderCleaner.Terminal.Enums;
+using UnityProjectFolderCleaner.Terminal.Interfaces;
 
 namespace UnityProjectFolderCleaner.Terminal.Helpers
 {
