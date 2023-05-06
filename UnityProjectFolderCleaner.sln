@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityProjectFolderCleaner.Terminal", "UnityProjectFolderCleaner.Terminal.csproj", "{13F2CCCF-F4B3-4A0B-B491-83F35A85BA1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityProjectFolderCleaner.Terminal", "UnityProjectCleaner\UnityProjectFolderCleaner.csproj", "{13F2CCCF-F4B3-4A0B-B491-83F35A85BA1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
