@@ -1,4 +1,4 @@
-﻿namespace UnityProjectFolderCleaner.Terminal.Data;
+﻿namespace UnityProjectFolderCleaner.Data;
 
 public class UnityProjectInfo
 {

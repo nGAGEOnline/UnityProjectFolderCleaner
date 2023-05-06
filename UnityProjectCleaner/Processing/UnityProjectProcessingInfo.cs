@@ -1,7 +1,7 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.Processing;
+namespace UnityProjectFolderCleaner.Processing;
 
 public class UnityProjectProcessingInfo : ProcessingInfo, IProcessingInfoWithChildren<DirectoryInfo, UnityProjectInfo>
 {

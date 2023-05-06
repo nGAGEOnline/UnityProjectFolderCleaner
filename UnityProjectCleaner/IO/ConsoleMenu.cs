@@ -1,11 +1,11 @@
 ﻿// ConsoleMenu.cs
 
-using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Services;
+using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Services;
 
-namespace UnityProjectFolderCleaner.Terminal.IO
+namespace UnityProjectFolderCleaner.IO
 {
     public class ConsoleMenu
     {
@@ -39,8 +39,8 @@ namespace UnityProjectFolderCleaner.Terminal.IO
 	            return null;
             
             IFolderCleaningService cleaningService = cleaningModeSelection == 1
-				? new MockFolderCleaningService()
-				: new FolderCleaningService();
+				? new MockFolderCleaningService(_outputWriter)
+				: new FolderCleaningService(_outputWriter);
 
             return new UnityProjectCleanerSettings
             {

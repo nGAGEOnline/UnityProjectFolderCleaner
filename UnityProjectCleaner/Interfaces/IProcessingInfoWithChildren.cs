@@ -1,4 +1,4 @@
-﻿namespace UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿namespace UnityProjectFolderCleaner.Interfaces;
 
 public interface IProcessingInfoWithChildren<T> : IProcessingInfo where T : IProcessingInfo
 {

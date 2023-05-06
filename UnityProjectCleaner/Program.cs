@@ -1,9 +1,9 @@
-﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.IO;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Helpers;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.IO;
 
-namespace UnityProjectFolderCleaner.Terminal;
+namespace UnityProjectFolderCleaner;
 
 internal static class Program
 {

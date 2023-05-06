@@ -1,4 +1,4 @@
-﻿namespace UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿namespace UnityProjectFolderCleaner.Interfaces;
 
 public interface IUserInputHandler
 {

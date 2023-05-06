@@ -1,6 +1,6 @@
-﻿using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.Data;
+namespace UnityProjectFolderCleaner.Data;
 
 public class UnityProjectCleanerSettings
 {

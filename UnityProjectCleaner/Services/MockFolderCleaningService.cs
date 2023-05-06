@@ -1,21 +1,32 @@
-﻿using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Processing;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Processing;
 
-namespace UnityProjectFolderCleaner.Terminal.Services;
+namespace UnityProjectFolderCleaner.Services;
 
-public class MockFolderCleaningService : IFolderCleaningService
+public class MockFolderCleaningService : BaseCleaningService, IFolderCleaningService
 {
+	public MockFolderCleaningService(IOutputWriter outputWriter) 
+		: base(outputWriter) { }
+
 	public void Clean(TotalProcessingInfo foldersToClean)
 	{
 		foreach (var unityProjectInfo in foldersToClean.Children.SelectMany(targetFolderInfo => targetFolderInfo.Children))
 		{
-			Console.WriteLine($"[MOCK] Cleaning Unity folder: {unityProjectInfo.Target.Name}");
-			Thread.Sleep(10);
+			OutputWriter.WriteInColor("\n[MOCK] ", Color.DarkCyan);
+			OutputWriter.WriteInColor("Cleaning: ", Color.White);
+			OutputWriter.WriteLineInColor(unityProjectInfo.Target.Name, Color.Yellow);
+
+			Thread.Sleep(Random.Shared.Next(20, 100));
 			foreach (var directoryInfo in unityProjectInfo.Children)
 			{
-				Console.WriteLine($"[MOCK] Deleting folder: {directoryInfo.FullName}");
-				Thread.Sleep(10);
+				OutputWriter.WriteInColor("[MOCK] ", Color.DarkCyan);
+				OutputWriter.WriteInColor("Deleting: ", Color.Gray);
+				OutputWriter.WriteLineInColor(directoryInfo.FullName, Color.Red);
+
+				Thread.Sleep(Random.Shared.Next(20, 100));
 			}
 		}
+		OutputWriter.NewLine();
 	}
 }

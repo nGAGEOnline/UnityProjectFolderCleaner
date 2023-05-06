@@ -1,4 +1,4 @@
-﻿namespace UnityProjectFolderCleaner.Terminal.Enums;
+﻿namespace UnityProjectFolderCleaner.Enums;
 
 public enum Color
 {

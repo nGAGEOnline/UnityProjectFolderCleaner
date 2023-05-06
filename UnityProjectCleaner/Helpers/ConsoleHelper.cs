@@ -1,7 +1,7 @@
-﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.Helpers
+namespace UnityProjectFolderCleaner.Helpers
 {
 	public class ConsoleOutputWriter : IOutputWriter
 	{

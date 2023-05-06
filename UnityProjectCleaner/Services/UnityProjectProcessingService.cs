@@ -1,9 +1,9 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Processing;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Processing;
 
-namespace UnityProjectFolderCleaner.Terminal.Services;
+namespace UnityProjectFolderCleaner.Services;
 
 public class UnityProjectProcessingService : IProcessingService<UnityProjectProcessingInfo>
 {

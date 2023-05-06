@@ -1,6 +1,6 @@
-﻿using UnityProjectFolderCleaner.Terminal.Processing;
+﻿using UnityProjectFolderCleaner.Processing;
 
-namespace UnityProjectFolderCleaner.Terminal.Interfaces;
+namespace UnityProjectFolderCleaner.Interfaces;
 
 public interface IFolderCleaningService
 {

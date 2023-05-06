@@ -1,20 +1,30 @@
-﻿using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Processing;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Processing;
 
-namespace UnityProjectFolderCleaner.Terminal.Services;
+namespace UnityProjectFolderCleaner.Services;
 
-public class FolderCleaningService : IFolderCleaningService
+public class FolderCleaningService : BaseCleaningService, IFolderCleaningService
 {
+	public FolderCleaningService(IOutputWriter outputWriter) 
+		: base(outputWriter) { }
+
 	public void Clean(TotalProcessingInfo foldersToClean)
 	{
 		foreach (var unityProjectInfo in foldersToClean.Children.SelectMany(targetFolderInfo => targetFolderInfo.Children))
 		{
-			Console.WriteLine($"Cleaning Unity folder: {unityProjectInfo.Target.Name}");
+			OutputWriter.WriteInColor("\nCleaning: ", Color.White);
+			OutputWriter.WriteLineInColor(unityProjectInfo.Target.Name, Color.Yellow);
+
 			foreach (var directoryInfo in unityProjectInfo.Children)
 			{
-				Console.WriteLine($"Deleting folder: {directoryInfo.FullName}");
+				OutputWriter.WriteInColor("Deleting: ", Color.Gray);
+				OutputWriter.WriteLineInColor(directoryInfo.FullName, Color.Red);
+
 				directoryInfo.Delete(true);
 			}
 		}
+		OutputWriter.NewLine();
 	}
+
 }

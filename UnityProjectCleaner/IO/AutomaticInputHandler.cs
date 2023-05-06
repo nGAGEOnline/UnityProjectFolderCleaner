@@ -1,7 +1,7 @@
-﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.IO;
+namespace UnityProjectFolderCleaner.IO;
 
 public class AutomaticInputHandler : BaseInputHandler, IUserInputHandler
 {
@@ -20,19 +20,19 @@ public class AutomaticInputHandler : BaseInputHandler, IUserInputHandler
 
 	public IEnumerable<string> GetTargetFolders()
 	{
-		_outputWriter.WriteLineInColor("Skipping user-input. Automatically assigning target folders.", Color.Red);
+		OutputWriter.WriteLineInColor("Skipping user-input. Automatically assigning target folders.", Color.Red);
 		Thread.Sleep(1000);
-		_outputWriter.WriteInColor("Automatically assigning: ", Color.DarkCyan);
+		OutputWriter.WriteInColor("Automatically assigning: ", Color.DarkCyan);
 		Thread.Sleep(1000);
-		_outputWriter.WriteLineInColor($"{string.Join(", ", _targetFolders)}", Color.White);
+		OutputWriter.WriteLineInColor($"{string.Join(", ", _targetFolders)}", Color.White);
 		Thread.Sleep(2000);
-		_outputWriter.NewLine();
+		OutputWriter.NewLine();
 		return _targetFolders;
 	}
 
 	public bool ConfirmCleaning()
 	{
-		DisplayCleaningConfirmationPrompt("(Mock) ");
+		DisplayCleaningConfirmationPrompt("[Mock] ");
 		ConsoleKeyInfo keyInfo;
 
 		do

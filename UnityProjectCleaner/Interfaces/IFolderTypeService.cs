@@ -1,7 +1,7 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Enums;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Enums;
 
-namespace UnityProjectFolderCleaner.Terminal.Interfaces;
+namespace UnityProjectFolderCleaner.Interfaces;
 
 public interface IFolderTypeService
 {

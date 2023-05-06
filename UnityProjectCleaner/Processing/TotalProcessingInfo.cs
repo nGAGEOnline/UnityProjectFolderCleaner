@@ -1,6 +1,6 @@
-﻿using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.Processing;
+namespace UnityProjectFolderCleaner.Processing;
 
 public class TotalProcessingInfo : IProcessingInfoWithChildren<TargetFolderProcessingInfo>
 {

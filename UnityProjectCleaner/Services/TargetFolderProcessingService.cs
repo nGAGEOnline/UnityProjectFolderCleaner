@@ -1,8 +1,8 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Processing;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Processing;
 
-namespace UnityProjectFolderCleaner.Terminal.Services;
+namespace UnityProjectFolderCleaner.Services;
 
 public class TargetFolderProcessingService : IProcessingService<TargetFolderProcessingInfo>
 {

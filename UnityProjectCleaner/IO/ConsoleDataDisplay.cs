@@ -1,8 +1,8 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.IO
+namespace UnityProjectFolderCleaner.IO
 {
     public class ConsoleDataDisplay : IDataDisplay
     {
@@ -15,10 +15,10 @@ namespace UnityProjectFolderCleaner.Terminal.IO
 
         public void DisplayUnityProjectTitle(UnityProjectInfo unityProjectInfo)
         {
-	        _outputWriter.WriteInColor($"\t{unityProjectInfo.Name}", Color.White);
+	        _outputWriter.WriteInColor($"\t{unityProjectInfo.Name}", Color.Cyan);
             Console.CursorLeft = CURSOR_LEFT - (unityProjectInfo.UnityVersion.Length + 2);
             _outputWriter.WriteInColor("[", Color.White);
-            _outputWriter.WriteInColor($"{unityProjectInfo.UnityVersion}", Color.Cyan);
+            _outputWriter.WriteInColor($"{unityProjectInfo.UnityVersion}", Color.DarkCyan);
             _outputWriter.WriteLineInColor("]", Color.White);
         }
 

@@ -1,11 +1,10 @@
-﻿using UnityProjectFolderCleaner.Terminal.Data;
-using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Helpers;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
-using UnityProjectFolderCleaner.Terminal.Processing;
-using UnityProjectFolderCleaner.Terminal.Services;
+﻿using UnityProjectFolderCleaner.Data;
+using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
+using UnityProjectFolderCleaner.Processing;
+using UnityProjectFolderCleaner.Services;
 
-namespace UnityProjectFolderCleaner.Terminal;
+namespace UnityProjectFolderCleaner;
 
 public class UnityProjectCleaner
 {
@@ -40,6 +39,7 @@ public class UnityProjectCleaner
 		}
         
 		DisplaySummary();
+		DisplayTotals();
         
 		if (DisplaySummaryAndConfirmCleaning())
 			CleanFolders();
@@ -49,19 +49,24 @@ public class UnityProjectCleaner
 
 	private void DisplaySummary()
 	{
+		_outputWriter.NewLine();
 		_outputWriter.LineWithInsert('_', "[ SUMMARIES ]", 48);
 
 		foreach (var targetSize in _totalProcessingInfo.Children)
 		{
-			_outputWriter.LineWithInsert('.', $"[ {targetSize.Target.Name} ]", 48);
-			_dataDisplay.DisplayConclusion(new SizeInfo(_totalProcessingInfo.TotalSize), new SizeInfo(_totalProcessingInfo.TotalSizeToClean));
+			_outputWriter.LineWithInsert('.', $"[ {targetSize.Target.FullName} ]", 48);
+			_dataDisplay.DisplayConclusion(new SizeInfo(targetSize.TotalSize), new SizeInfo(targetSize.TotalSizeToClean));
 		}
-		
 		_outputWriter.Line('_', 48);
-		_outputWriter.NewLine(2);
+	}
+
+	private void DisplayTotals()
+	{
+		_outputWriter.NewLine();
 		_outputWriter.LineWithInsert('=', "[ TOTAL ]", 48);
 		_dataDisplay.DisplayConclusion(new SizeInfo(_totalProcessingInfo.TotalSize), new SizeInfo(_totalProcessingInfo.TotalSizeToClean));
 		_outputWriter.Line('=', 48);
+		_outputWriter.NewLine();
 	}
 
 	private bool DisplaySummaryAndConfirmCleaning() 
@@ -69,7 +74,8 @@ public class UnityProjectCleaner
 
 	private void CleanFolders()
 	{
-		_outputWriter.WriteLineInColor("\nCleaning...", Color.White);
+		_outputWriter.WriteLineInColor("\nCleaning...", Color.Yellow);
+		
 		_folderCleaningService.Clean(_totalProcessingInfo);
 
 		_outputWriter.WriteLineInColor("\nCleaning Completed!", Color.Yellow);

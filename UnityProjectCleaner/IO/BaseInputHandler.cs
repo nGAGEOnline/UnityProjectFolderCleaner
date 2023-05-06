@@ -1,23 +1,21 @@
-﻿using UnityProjectFolderCleaner.Terminal.Enums;
-using UnityProjectFolderCleaner.Terminal.Interfaces;
+﻿using UnityProjectFolderCleaner.Enums;
+using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Terminal.IO;
+namespace UnityProjectFolderCleaner.IO;
 
 public abstract class BaseInputHandler
 {
-	protected readonly IOutputWriter _outputWriter;
+	protected readonly IOutputWriter OutputWriter;
 
-	protected BaseInputHandler(IOutputWriter outputWriter)
-	{
-		_outputWriter = outputWriter;
-	}
+	protected BaseInputHandler(IOutputWriter outputWriter) => OutputWriter = outputWriter;
 
 	protected void DisplayCleaningConfirmationPrompt(string prefix = "")
 	{
-		_outputWriter.WriteInColor($"{prefix}Do you want to proceed with cleaning?", Color.White);
-		_outputWriter.WriteInColor(" [Y]es", Color.Green);
-		_outputWriter.WriteInColor("/", Color.White);
-		_outputWriter.WriteInColor("[N]o", Color.Red);
-		_outputWriter.WriteInColor(" (Default: Yes)", Color.White);
+		if (prefix != string.Empty)
+			OutputWriter.WriteInColor($"{prefix} ", Color.DarkCyan);
+		OutputWriter.WriteInColor($"Do you want to proceed with cleaning? ", Color.White);
+		OutputWriter.WriteInColor("\t[Y]es", Color.Green);
+		OutputWriter.WriteInColor("/", Color.White);
+		OutputWriter.WriteInColor("[N]o ", Color.Red);
 	}
 }
