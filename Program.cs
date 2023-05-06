@@ -26,8 +26,7 @@ internal static class Program
 		var cleaner = new UnityProjectCleaner(settings);
 		cleaner.Run();
 
-		Thread.Sleep(3000);
-		// Console.WriteLine("Press any key to exit...");
-		// Console.ReadKey(true);
+		Console.WriteLine("Press any key to exit...");
+		Console.ReadKey(true);
 	}
 }
