@@ -17,7 +17,7 @@ public class UnityProjectInfo
 	public bool IsProtected(string folderName) 
 		=> _protectedFolders.Any(x => string.Equals(x, folderName, StringComparison.CurrentCultureIgnoreCase));
 
-	public DirectoryInfo[] GetDirectories() 
+	public IEnumerable<DirectoryInfo> GetDirectories() 
 		=> _directoryInfo.GetDirectories();
 
 	public bool HasSolutionFiles() 
@@ -26,14 +26,12 @@ public class UnityProjectInfo
 	private string GetUnityVersion()
 	{
 		var version = "Unknown";
-		var projectSettingsPath = Path.Combine(_directoryInfo.FullName, "ProjectSettings");
-		var projectVersionFilePath = Path.Combine(projectSettingsPath, "ProjectVersion.txt");
+		var projectVersionFilePath = Path.Combine(_directoryInfo.FullName, "ProjectSettings", "ProjectVersion.txt");
 
 		if (!File.Exists(projectVersionFilePath))
 			return version;
 		
 		var lines = File.ReadAllLines(projectVersionFilePath);
-
 		foreach (var line in lines)
 		{
 			if (!line.StartsWith("m_EditorVersion:"))
@@ -42,9 +40,6 @@ public class UnityProjectInfo
 			version = line["m_EditorVersion:".Length..].Trim();
 			break;
 		}
-
 		return version;
 	}
-
-
 }

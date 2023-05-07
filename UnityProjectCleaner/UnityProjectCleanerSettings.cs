@@ -1,6 +1,6 @@
 ﻿using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Data;
+namespace UnityProjectFolderCleaner;
 
 public class UnityProjectCleanerSettings
 {

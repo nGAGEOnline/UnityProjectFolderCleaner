@@ -1,10 +1,9 @@
 ﻿using UnityProjectFolderCleaner.Data;
 using UnityProjectFolderCleaner.Interfaces;
-using UnityProjectFolderCleaner.Processing;
 
 namespace UnityProjectFolderCleaner.Services;
 
-public class TargetFolderProcessingService : IProcessingService<TargetFolderProcessingInfo>
+public class TargetFolderProcessingService : IProcessingService<TargetProcessingInfo>
 {
 	private readonly string _targetFolder;
 	private readonly IDataDisplay _dataDisplay;
@@ -19,11 +18,11 @@ public class TargetFolderProcessingService : IProcessingService<TargetFolderProc
 		_folderTypeService = folderTypeService;
 	}
 
-	public TargetFolderProcessingInfo Process()
+	public TargetProcessingInfo Process()
 	{
 		var targetInfo = new DirectoryInfo(_targetFolder);
 		var unityFolders = targetInfo.GetDirectories();
-		var targetFolderProcessingInfo = new TargetFolderProcessingInfo(targetInfo);
+		var targetFolderProcessingInfo = new TargetProcessingInfo(targetInfo);
 
 		foreach (var unityFolder in unityFolders)
 		{

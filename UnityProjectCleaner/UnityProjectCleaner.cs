@@ -1,7 +1,6 @@
 ﻿using UnityProjectFolderCleaner.Data;
 using UnityProjectFolderCleaner.Enums;
 using UnityProjectFolderCleaner.Interfaces;
-using UnityProjectFolderCleaner.Processing;
 using UnityProjectFolderCleaner.Services;
 
 namespace UnityProjectFolderCleaner;
@@ -76,6 +75,7 @@ public class UnityProjectCleaner
 	{
 		_outputWriter.WriteLineInColor("\nCleaning...", Color.Yellow);
 		
+		// TODO: Should get actual cleaned size total
 		_folderCleaningService.Clean(_totalProcessingInfo);
 
 		_outputWriter.WriteLineInColor("\nCleaning Completed!", Color.Yellow);

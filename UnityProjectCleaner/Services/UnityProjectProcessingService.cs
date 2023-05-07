@@ -1,7 +1,6 @@
 ﻿using UnityProjectFolderCleaner.Data;
 using UnityProjectFolderCleaner.Enums;
 using UnityProjectFolderCleaner.Interfaces;
-using UnityProjectFolderCleaner.Processing;
 
 namespace UnityProjectFolderCleaner.Services;
 

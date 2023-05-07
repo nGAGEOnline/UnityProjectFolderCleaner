@@ -1,4 +1,4 @@
-﻿using UnityProjectFolderCleaner.Processing;
+﻿using UnityProjectFolderCleaner.Data;
 
 namespace UnityProjectFolderCleaner.Interfaces;
 

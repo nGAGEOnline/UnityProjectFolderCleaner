@@ -1,6 +1,6 @@
 ﻿using UnityProjectFolderCleaner.Interfaces;
 
-namespace UnityProjectFolderCleaner.Processing;
+namespace UnityProjectFolderCleaner.Data;
 
 public abstract class ProcessingInfo : IProcessingInfo
 {

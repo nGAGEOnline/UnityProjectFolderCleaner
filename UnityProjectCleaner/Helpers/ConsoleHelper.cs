@@ -5,10 +5,6 @@ namespace UnityProjectFolderCleaner.Helpers
 {
 	public class ConsoleOutputWriter : IOutputWriter
 	{
-		public void Write(string text) => Console.Write(text);
-		public void WriteLine(string text) => Console.WriteLine(text);
-		public void WriteLine() => Console.WriteLine();
-        
 		public void WriteInColor(string text, Color color)
 		{
 			var consoleColor = ConvertToConsoleColor(color);
@@ -26,15 +22,14 @@ namespace UnityProjectFolderCleaner.Helpers
 			Console.WriteLine(text);
 			Console.ForegroundColor = previousColor;
 		}
-		private static ConsoleColor ConvertToConsoleColor(Color color) 
-			=> (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color.ToString());
-
 		public void NewLine(int count = 1)
 		{
 			for (var i = 0; i < count; i++)
 				Console.WriteLine();
 		}
-
+		public void Position(int left = 0) => Console.CursorLeft = left;
+		public void Position(int left, int top) => Console.SetCursorPosition(left, top);
+		
 		public void Line(char character, int length = 40) 
 			=> Console.WriteLine(new string(character, length));
 
@@ -55,5 +50,8 @@ namespace UnityProjectFolderCleaner.Helpers
 			Console.CursorLeft = length + 1;
 			Console.WriteLine();
 		}
+		
+		private static ConsoleColor ConvertToConsoleColor(Color color) 
+			=> (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color.ToString());
 	}
 }
