@@ -5,8 +5,13 @@ namespace UnityProjectFolderCleaner.IO
 {
 	public class ConsoleUserInputHandler : BaseInputHandler, IUserInputHandler
     {
-	    public ConsoleUserInputHandler(IOutputWriter outputWriter) 
-		    : base(outputWriter) { }
+	    private readonly IEnumerable<string> _menuOptions;
+
+	    public ConsoleUserInputHandler(IOutputWriter outputWriter, IEnumerable<string> menuOptions) 
+		    : base(outputWriter)
+	    {
+		    _menuOptions = menuOptions;
+	    }
 
 	    public IEnumerable<string> GetTargetFolders()
         {

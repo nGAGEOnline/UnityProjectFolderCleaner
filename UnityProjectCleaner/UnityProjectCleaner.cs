@@ -15,19 +15,23 @@ public class UnityProjectCleaner
 	private readonly IFolderTypeService _folderTypeService;
 
 	private readonly TotalProcessingInfo _totalProcessingInfo = new();
-	
+	private long _actyualDeletedSizeTotal;
+
 	public UnityProjectCleaner(UnityProjectCleanerSettings settings)
 	{
 		_dataDisplay = settings.DataDisplay;
-		_userInputHandler = settings.UserInputHandler;
 		_outputWriter = settings.OutputWriter;
+		_targetFolders = settings.TargetFolders;
+		_userInputHandler = settings.UserInputHandler;
 		_folderTypeService = settings.FolderTypeService;
 		_folderCleaningService = settings.FolderCleaningService;
-		_targetFolders = settings.TargetFolders;
+		_folderCleaningService.OnDeletedNotifySizeTotal += AddToActualTotal;
 	}
+	~UnityProjectCleaner() => _folderCleaningService.OnDeletedNotifySizeTotal -= AddToActualTotal;
 
 	public void Run()
 	{
+		_actyualDeletedSizeTotal = 0L;
 		foreach (var targetFolder in _targetFolders)
 		{
 			var targetFolderProcessingService = new TargetFolderProcessingService(targetFolder, _dataDisplay, _outputWriter, _folderTypeService);
@@ -75,12 +79,14 @@ public class UnityProjectCleaner
 	{
 		_outputWriter.WriteLineInColor("\nCleaning...", Color.Yellow);
 		
-		// TODO: Should get actual cleaned size total
 		_folderCleaningService.Clean(_totalProcessingInfo);
 
 		_outputWriter.WriteLineInColor("\nCleaning Completed!", Color.Yellow);
 		_outputWriter.WriteLineInColor($"Total size: {new SizeInfo(_totalProcessingInfo.TotalSize)}", Color.Red);
-		_outputWriter.WriteLineInColor($"Total cleaned: {new SizeInfo(_totalProcessingInfo.TotalSizeToClean)}", Color.Green);
-		_outputWriter.WriteLineInColor($"Total remaining: {new SizeInfo(_totalProcessingInfo.TotalSize - _totalProcessingInfo.TotalSizeToClean)}", Color.Yellow);
+		_outputWriter.WriteLineInColor($"Total cleaned: {new SizeInfo(_actyualDeletedSizeTotal)}", Color.Green);
+		_outputWriter.WriteLineInColor($"Total remaining: {new SizeInfo(_totalProcessingInfo.TotalSize - _actyualDeletedSizeTotal)}", Color.Yellow);
 	}
+	
+	private void AddToActualTotal(SizeInfo sizeInfo) 
+		=> _actyualDeletedSizeTotal += sizeInfo.Bytes;
 }

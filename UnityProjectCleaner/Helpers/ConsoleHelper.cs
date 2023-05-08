@@ -5,6 +5,7 @@ namespace UnityProjectFolderCleaner.Helpers
 {
 	public class ConsoleOutputWriter : IOutputWriter
 	{
+		public void Clear() => Console.Clear();
 		public void WriteInColor(string text, Color color)
 		{
 			var consoleColor = ConvertToConsoleColor(color);
@@ -13,7 +14,6 @@ namespace UnityProjectFolderCleaner.Helpers
 			Console.Write(text);
 			Console.ForegroundColor = previousColor;
 		}
-
 		public void WriteLineInColor(string text, Color color)
 		{
 			var consoleColor = ConvertToConsoleColor(color);
@@ -22,12 +22,16 @@ namespace UnityProjectFolderCleaner.Helpers
 			Console.WriteLine(text);
 			Console.ForegroundColor = previousColor;
 		}
+		
 		public void NewLine(int count = 1)
 		{
+			count = Math.Clamp(count, 1, Console.WindowHeight);
 			for (var i = 0; i < count; i++)
 				Console.WriteLine();
 		}
-		public void Position(int left = 0) => Console.CursorLeft = left;
+		
+		public void Left(int left = 0) => Console.CursorLeft = left;
+		public void Top(int top = 0) => Console.CursorTop = top;
 		public void Position(int left, int top) => Console.SetCursorPosition(left, top);
 		
 		public void Line(char character, int length = 40) 
@@ -49,6 +53,36 @@ namespace UnityProjectFolderCleaner.Helpers
 			Console.WriteLine(targetFolderName);
 			Console.CursorLeft = length + 1;
 			Console.WriteLine();
+		}
+		
+		public void WriteStatus(string text, Color color)
+		{
+			WriteInColor(" [", Color.Gray);
+			WriteInColor($"{text}", color);
+			WriteInColor("]\n", Color.Gray);
+		}
+	
+		public void WriteError(DirectoryInfo directoryInfo, string message, string error, bool isMock = false)
+		{
+			ErrorBase(directoryInfo, message, isMock);
+			WriteLineInColor($" ({error})", Color.Red);
+		}
+
+		public void WriteError(DirectoryInfo directoryInfo, string message, Exception ex, bool isMock = false)
+		{
+			ErrorBase(directoryInfo, message, isMock);
+			WriteLineInColor($" {ex.Message}", Color.Red);
+		}
+
+		private void ErrorBase(DirectoryInfo directoryInfo, string message, bool isMock = false)
+		{
+			Left(0);
+			if (isMock)
+				WriteInColor("[MOCK] ", Color.DarkCyan);
+			WriteInColor("ERROR: ", Color.Red);
+			WriteInColor($"{message} ", Color.Gray);
+			WriteInColor($"{directoryInfo.FullName}", Color.Yellow);
+			WriteInColor(".", Color.Gray);
 		}
 		
 		private static ConsoleColor ConvertToConsoleColor(Color color) 

@@ -1,5 +1,6 @@
 ﻿using System.Security.AccessControl;
 using System.Security.Principal;
+using Microsoft.VisualBasic.FileIO;
 using UnityProjectFolderCleaner.Data;
 using UnityProjectFolderCleaner.Enums;
 using UnityProjectFolderCleaner.Interfaces;
@@ -8,6 +9,8 @@ namespace UnityProjectFolderCleaner.Services;
 
 public class FolderCleaningService : BaseCleaningService, IFolderCleaningService
 {
+	public event Action<SizeInfo> OnDeletedNotifySizeTotal;
+
 	public FolderCleaningService(IOutputWriter outputWriter) 
 		: base(outputWriter) { }
 
@@ -27,53 +30,49 @@ public class FolderCleaningService : BaseCleaningService, IFolderCleaningService
             
             foreach (var directoryInfo in unityProjectInfo.Children)
             {
-                OutputWriter.WriteInColor("Deleting: ", Color.Gray);
-                OutputWriter.WriteInColor(directoryInfo.FullName, Color.Red);
+	            var sizeInfo = new SizeInfo(directoryInfo);
+	            OutputWriter.WriteInColor("Deleting: ", Color.Gray);
+	            OutputWriter.WriteInColor($"{directoryInfo.Parent?.Name}\\{directoryInfo.Name}", Color.White);
+
+	            OutputWriter.WriteInColor(" (", Color.Gray);
+	            OutputWriter.WriteInColor(sizeInfo.ToString(), Color.Yellow);
+	            OutputWriter.WriteInColor(")", Color.Gray);
 
                 try
                 {
-	                directoryInfo.Delete(true);
-
-	                OutputWriter.WriteInColor(" (", Color.Gray);
-	                OutputWriter.WriteInColor(SizeInfo.Calculate(directoryInfo).ToString(), Color.Red);
-	                OutputWriter.WriteInColor(")\n", Color.Gray);
+	                if (directoryInfo.Name == ".git")
+	                {
+		                var directorySecurity = directoryInfo.GetAccessControl();
+		                var identity = WindowsIdentity.GetCurrent();
+		                var fileSystemAccessRule = new FileSystemAccessRule(identity.Name, FileSystemRights.FullControl, AccessControlType.Allow);
+		                directorySecurity.AddAccessRule(fileSystemAccessRule);
+		                directoryInfo.SetAccessControl(directorySecurity);
+	                }
+	                else
+		                FileSystem.DeleteDirectory(directoryInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+	                // directoryInfo.Delete(true);
+	                
+	                OnDeletedNotifySizeTotal?.Invoke(sizeInfo);
+	                
+	                OutputWriter.WriteStatus("OK", Color.Green);
                 }
-				catch (UnauthorizedAccessException)
-				{
-					OutputError(directoryInfo, "Unable to delete", "Access denied.");
-				}
+                catch (UnauthorizedAccessException)
+                {
+	                OutputWriter.WriteStatus("FAILED", Color.Red);
+	                OutputWriter.WriteError(directoryInfo, "Unable to delete", "Access denied.");
+                }
+                catch (IOException ex)
+                {
+	                OutputWriter.WriteStatus("FAILED", Color.Red);
+	                OutputWriter.WriteError(directoryInfo, "IO error", ex);
+                }
                 catch (Exception ex)
                 {
-	                OutputError(directoryInfo, "Unable to delete", ex);
+	                OutputWriter.WriteStatus("FAILED", Color.Red);
+	                OutputWriter.WriteError(directoryInfo, "Unable to delete", ex);
                 }
             }
         }
         OutputWriter.NewLine();
     }
-
-	private void OutputError(DirectoryInfo directoryInfo, string message)
-	{
-		OutputErrorBase(directoryInfo, message);
-		OutputWriter.NewLine();
-	}
-	private void OutputError(DirectoryInfo directoryInfo, string message, string error)
-	{
-		OutputErrorBase(directoryInfo, message);
-		OutputWriter.WriteLineInColor($" ({error})", Color.Red);
-	}
-
-	private void OutputError(DirectoryInfo directoryInfo, string message, Exception ex)
-	{
-		OutputErrorBase(directoryInfo, message);
-		OutputWriter.WriteLineInColor($" {ex.Message}", Color.Red);
-	}
-
-	private void OutputErrorBase(DirectoryInfo directoryInfo, string message)
-	{
-		OutputWriter.Position(0);
-		OutputWriter.WriteInColor("ERROR: ", Color.Red);
-		OutputWriter.WriteInColor($"{message} ", Color.Gray);
-		OutputWriter.WriteInColor($"{directoryInfo.FullName}", Color.Yellow);
-		OutputWriter.WriteInColor(".", Color.Gray);
-	}
 }
