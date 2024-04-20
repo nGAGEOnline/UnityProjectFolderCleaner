@@ -6,11 +6,11 @@ namespace UnityProjectFolderCleaner.Services;
 public class TargetFolderProcessingService : IProcessingService<TargetProcessingInfo>
 {
 	private readonly string _targetFolder;
-	private readonly IDataDisplay _dataDisplay;
-	private readonly IOutputWriter _outputWriter;
+	private readonly IDataDisplay? _dataDisplay;
+	private readonly IOutputWriter? _outputWriter;
 	private readonly IFolderTypeService _folderTypeService;
 
-	public TargetFolderProcessingService(string targetFolder, IDataDisplay dataDisplay, IOutputWriter outputWriter, IFolderTypeService folderTypeService)
+	public TargetFolderProcessingService(string targetFolder, IDataDisplay? dataDisplay, IOutputWriter? outputWriter, IFolderTypeService folderTypeService)
 	{
 		_targetFolder = targetFolder;
 		_dataDisplay = dataDisplay;

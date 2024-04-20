@@ -30,6 +30,35 @@ namespace UnityProjectFolderCleaner.Helpers
 				Console.WriteLine();
 		}
 		
+		public bool Confirm(string prompt)
+		{
+			DisplayCleaningConfirmationPrompt(prompt);
+			ConsoleKeyInfo keyInfo;
+
+			do
+			{
+				keyInfo = Console.ReadKey(true);
+			} while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N && keyInfo.Key != ConsoleKey.Enter && keyInfo.Key != ConsoleKey.Escape);
+
+			Console.WriteLine();
+
+			return keyInfo.Key is ConsoleKey.Y or ConsoleKey.Enter;
+		}
+
+		private void DisplayCleaningConfirmationPrompt(string prompt, string prefix = "")
+		{
+			if (string.IsNullOrEmpty(prompt))
+				return;
+			
+			if (!string.IsNullOrEmpty(prefix))
+				WriteInColor($"{prefix} ", Color.DarkCyan);
+			
+			WriteInColor($"{prompt} ", Color.White);
+			WriteInColor("\t[Y]es", Color.Green);
+			WriteInColor("/", Color.White);
+			WriteInColor("[N]o ", Color.Red);
+		}
+		
 		public void Left(int left = 0) => Console.CursorLeft = left;
 		public void Top(int top = 0) => Console.CursorTop = top;
 		public void Position(int left, int top) => Console.SetCursorPosition(left, top);

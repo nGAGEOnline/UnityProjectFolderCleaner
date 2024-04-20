@@ -4,31 +4,26 @@ using UnityProjectFolderCleaner.Interfaces;
 
 namespace UnityProjectFolderCleaner.IO
 {
-    public class ConsoleDataDisplay : IDataDisplay
+    public class ConsoleDataDisplay(IOutputWriter outputWriter) : IDataDisplay
     {
         private const int CURSOR_LEFT = 48;
 
-        private readonly IOutputWriter _outputWriter;
-
-        public ConsoleDataDisplay(IOutputWriter outputWriter) 
-	        => _outputWriter = outputWriter;
-
         public void DisplayUnityProjectTitle(UnityProjectInfo unityProjectInfo)
         {
-	        _outputWriter.WriteInColor($"\t{unityProjectInfo.Name}", Color.Cyan);
+	        outputWriter.WriteInColor($"\t{unityProjectInfo.Name}", Color.Cyan);
             Console.CursorLeft = CURSOR_LEFT - (unityProjectInfo.UnityVersion.Length + 2);
-            _outputWriter.WriteInColor("[", Color.White);
-            _outputWriter.WriteInColor($"{unityProjectInfo.UnityVersion}", Color.DarkCyan);
-            _outputWriter.WriteLineInColor("]", Color.White);
+            outputWriter.WriteInColor("[", Color.White);
+            outputWriter.WriteInColor($"{unityProjectInfo.UnityVersion}", Color.DarkCyan);
+            outputWriter.WriteLineInColor("]", Color.White);
         }
 
         public void DisplayFolderSizeInfo(DirectoryInfo directoryInfo, SizeInfo sizeInfo, FolderType type)
         {
-	        _outputWriter.WriteInColor($"\t{directoryInfo.Name}", Color.White);
+	        outputWriter.WriteInColor($"\t{directoryInfo.Name}", Color.White);
             Console.CursorLeft = CURSOR_LEFT - (sizeInfo.ToString().Length + 2);
-            _outputWriter.WriteInColor("[", Color.White);
-            _outputWriter.WriteInColor($"{sizeInfo}", type == FolderType.Clean ? Color.Red : Color.Green);
-            _outputWriter.WriteLineInColor("]", Color.White);
+            outputWriter.WriteInColor("[", Color.White);
+            outputWriter.WriteInColor($"{sizeInfo}", type == FolderType.Clean ? Color.Red : Color.Green);
+            outputWriter.WriteLineInColor("]", Color.White);
         }
 
         public void DisplayConclusion(SizeInfo sizeInfo, SizeInfo sizeInfoToClean)
@@ -44,11 +39,11 @@ namespace UnityProjectFolderCleaner.IO
 
         private void DisplayFileSizeLine(string label, SizeInfo sizeInfo, Color color)
         {
-	        _outputWriter.WriteInColor(label, Color.White);
+	        outputWriter.WriteInColor(label, Color.White);
             Console.CursorLeft = CURSOR_LEFT - (sizeInfo.ToString().Length + 2);
-            _outputWriter.WriteInColor("[", Color.White);
-            _outputWriter.WriteInColor($"{sizeInfo}", color);
-            _outputWriter.WriteLineInColor("]", Color.White);
+            outputWriter.WriteInColor("[", Color.White);
+            outputWriter.WriteInColor($"{sizeInfo}", color);
+            outputWriter.WriteLineInColor("]", Color.White);
         }
     }
 }

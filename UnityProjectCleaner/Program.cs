@@ -1,20 +1,20 @@
 ﻿using UnityProjectFolderCleaner.Enums;
 using UnityProjectFolderCleaner.Helpers;
-using UnityProjectFolderCleaner.Interfaces;
 using UnityProjectFolderCleaner.IO;
+using UnityProjectFolderCleaner.Providers;
 
 namespace UnityProjectFolderCleaner;
 
 internal static class Program
 {
-	private static readonly string[] TestFolders = { @"F:\TEST" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
+	private static readonly string[] TestFolders = { @"F:\_temp\UnityProjects" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
 	
 	private static void Main(string[] args)
 	{
-		IOutputWriter outputWriter = new ConsoleOutputWriter();
-		var consoleMenu = new ConsoleMenu(outputWriter, TestFolders);
+		var outputWriter = new ConsoleOutputWriter();
+		var settingsProvider = new ConsoleSettingsProvider(outputWriter, TestFolders);
 
-		var settings = consoleMenu.GetSettings();
+		var settings = settingsProvider.GetSettings();
 		if (settings == null)
 		{
 			outputWriter.WriteLineInColor("\nOperation aborted.\n", Color.Red);

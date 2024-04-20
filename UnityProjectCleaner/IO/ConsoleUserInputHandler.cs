@@ -56,7 +56,7 @@ namespace UnityProjectFolderCleaner.IO
 
         public bool ConfirmCleaning()
         {
-	        DisplayCleaningConfirmationPrompt();
+	        DisplayCleaningConfirmationPrompt("Do you want to proceed with cleaning?");
             ConsoleKeyInfo keyInfo;
 
             do

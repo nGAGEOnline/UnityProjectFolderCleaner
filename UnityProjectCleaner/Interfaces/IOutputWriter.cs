@@ -6,6 +6,8 @@ public interface IOutputWriter
 {
 	void NewLine(int count = 1);
 	void Clear();
+
+	bool Confirm(string prompt);
 	
 	void Left(int left);
 	void Top(int top = 0);

@@ -1,11 +1,11 @@
 ﻿namespace UnityProjectFolderCleaner.Data;
 
-public struct SizeInfo
+public readonly struct SizeInfo(long bytes)
 {
-	public long Bytes { get; }
+	public long Bytes { get; } = bytes;
 
-	public SizeInfo(long bytes) => Bytes = bytes;
-	public SizeInfo(DirectoryInfo directory) => Bytes = Calculate(directory);
+	public SizeInfo(DirectoryInfo directory) 
+		: this(Calculate(directory)) { }
 
 	public override string ToString()
 	{
