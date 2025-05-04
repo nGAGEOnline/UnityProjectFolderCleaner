@@ -49,9 +49,9 @@ public class AutomaticInputHandler : BaseInputHandler, IUserInputHandler
 		return _targetFolders;
 	}
 
-	public bool ConfirmCleaning()
+	public bool ConfirmCleaning(string text)
 	{
-		DisplayCleaningConfirmationPrompt("[Mock] ");
+		DisplayCleaningConfirmationPrompt($"[{text}] ");
 		ConsoleKeyInfo keyInfo;
 
 		do

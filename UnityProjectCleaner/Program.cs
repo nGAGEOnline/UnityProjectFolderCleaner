@@ -1,13 +1,12 @@
 ﻿using UnityProjectFolderCleaner.Enums;
 using UnityProjectFolderCleaner.Helpers;
-using UnityProjectFolderCleaner.IO;
 using UnityProjectFolderCleaner.Providers;
 
 namespace UnityProjectFolderCleaner;
 
 internal static class Program
 {
-	private static readonly string[] TestFolders = { @"F:\_temp\UnityProjects" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
+	private static readonly string[] TestFolders = { @"F:\UnityProjects" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
 	
 	private static void Main(string[] args)
 	{

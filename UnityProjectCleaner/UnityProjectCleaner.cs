@@ -7,6 +7,7 @@ namespace UnityProjectFolderCleaner;
 
 public class UnityProjectCleaner
 {
+	private readonly UnityProjectCleanerSettings _settings;
 	private readonly IDataDisplay? _dataDisplay;
 	private readonly IUserInputHandler? _userInputHandler;
 	private readonly IOutputWriter? _outputWriter;
@@ -19,6 +20,7 @@ public class UnityProjectCleaner
 
 	public UnityProjectCleaner(UnityProjectCleanerSettings settings)
 	{
+		_settings = settings;
 		_dataDisplay = settings.DataDisplay;
 		_outputWriter = settings.OutputWriter;
 		_targetFolders = settings.TargetFolders;
@@ -85,7 +87,7 @@ public class UnityProjectCleaner
 	}
 
 	private bool DisplaySummaryAndConfirmCleaning() 
-		=> _userInputHandler != null && _userInputHandler.ConfirmCleaning();
+		=> _userInputHandler != null && _userInputHandler.ConfirmCleaning(_settings.FolderCleaningService is MockFolderCleaningService ? "Mock" : "Clean");
 
 	private void CleanFolders()
 	{

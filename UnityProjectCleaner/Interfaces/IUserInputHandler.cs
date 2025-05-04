@@ -3,5 +3,5 @@
 public interface IUserInputHandler
 {
 	IEnumerable<string> GetTargetFolders();
-	bool ConfirmCleaning();
+	bool ConfirmCleaning(string text);
 }
