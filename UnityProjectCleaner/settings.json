@@ -2,6 +2,8 @@
   "UseAutomaticMode": true,
   "UseMockMode": false,
   "TargetFolders": [
-    "F:\\UnityProjects_Old"
+    "F:\\UnityProjects",
+    "F:\\UnityProjects_Old",
+    "F:\\UnityProjects_Test"
   ]
 }

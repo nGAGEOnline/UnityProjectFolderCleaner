@@ -6,7 +6,9 @@ namespace UnityProjectFolderCleaner;
 
 internal static class Program
 {
-	private static readonly string[] TestFolders = { @"F:\UnityProjects" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
+	private static readonly string[] TestFolders = { "F:\\UnityProjects",
+		"F:\\UnityProjects_Old",
+		"F:\\UnityProjects_Test" }; // @"D:\UnityProjects", @"F:\UnityProjects", 
 	
 	private static void Main(string[] args)
 	{
